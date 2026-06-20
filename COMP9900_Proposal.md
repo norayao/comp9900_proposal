@@ -203,84 +203,10 @@ The assessment guidance recommends allocating roughly one third of the total est
 
 Dashed boxes represent third-party services.
 
-The proposed system follows a layered web application architecture. It separates the frontend interface, API routing, business logic, AI interaction, data access, and persistent storage into different layers. This separation helps reduce coupling between components, makes the system easier to test, and ensures that sensitive student data is handled in a controlled way.
+The System Architecture Diagram presents the layered architecture of MentorPlan AI. The frontend handles teacher-facing workflows, while the FastAPI controller layer only performs routing, JWT authentication, and request validation. Business logic is placed in the service layer, including data cleaning, learning analytics, recommendation generation, expert reasoning, teacher decisions, prompt building, lesson plan generation, revision history, export, and interaction logging.
 
-1. **Frontend: React + TypeScript SPA with Material UI**
 
-   The frontend is a single-page web application used by teachers and researchers. It supports login, lesson context input, student data upload, column mapping, analytics, AI reasoning display, lesson plan editing, export, revision history, and researcher dashboard functions.
-
-   Axios is used to attach JWT tokens and send secure HTTPS JSON requests to the backend.
-
-2. **API Layer: FastAPI Controllers**
-
-   The API layer routes requests, validates request data, and checks JWT authentication. It does not contain business logic.
-
-   The main controllers include:
-
-   * `auth`
-   * `context`
-   * `upload`
-   * `mapping`
-   * `analytics`
-   * `recommendations`
-   * `decisions`
-   * `plan generation`
-   * `export`
-
-   Pydantic is used for request validation to standardise frontend request data.
-
-3. **Service Layer: Business Logic**
-
-   The service layer contains the main business logic of the system. It includes modules for file checks, data cleaning, analytics, recommendations, LLM gateway, prompt construction, teacher decisions, lesson plan generation, export, version control, and logging.
-
-   The core modules are **expert reasoning** and **outcome-activity-assessment alignment**. These modules support the main goal of the system: making AI-supported decision-making visible and understandable to teachers.
-
-   The AI adapter connects the system to different large language model services, such as Claude, Wenxin, GPT, Gemini, and other possible LLM providers.
-
-   The AI input only includes lesson context, analytics summaries, approved teacher decisions, and templates. Raw student files are not sent to the AI model.
-
-   The AI output is expected to be structured JSON containing recommendation reasoning and a draft lesson plan.
-
-   Services read and write data only through repositories and file storage tools.
-
-4. **Data Access Layer: SQLAlchemy Repositories and File Storage Client**
-
-   The data access layer is responsible for database and file operations. It separates persistent data operations from business logic.
-
-   The main repositories include:
-
-   * `users`
-   * `contexts`
-   * `datasets`
-   * `mappings`
-   * `analytics`
-   * `recommendations`
-   * `decisions`
-   * `plans`
-   * `versions`
-   * `exports`
-   * `logs`
-
-   These repositories handle SQL reads and writes, while the file storage client handles file reads and writes.
-
-5. **Persistence Layer**
-
-   The persistence layer contains two main storage components:
-
-   * **PostgreSQL:** Stores form data and JSON fields for analytics, reasoning, and lesson plan content.
-   * **Object Storage:** Stores raw Excel/CSV uploads and exported Word/PDF files.
-
-#### 3.1.2 Five-Layer Summary
-
-The system is organised into five layers:
-
-1. Teachers use the web frontend to send secure backend requests.
-2. The API layer checks user identity and request data format only.
-3. The service layer handles analytics, recommendations, AI prompts, and teacher actions. Expert reasoning and outcome matching make AI thinking visible. The AI adapter hides differences between different model APIs. Raw student files remain private.
-4. The data access layer handles database and file access.
-5. Storage is split between the database and file storage. The database stores structured data, while file storage stores uploads and exports.
-
-#### 3.1.3 Component Description Table
+#### 3.1.2 Component Description Table
 
 | Layer       | Component                    | Responsibility                                                                                          | Key Data / Interaction                       |
 | :---------- | :--------------------------- | :------------------------------------------------------------------------------------------------------ | :------------------------------------------- |
@@ -292,11 +218,7 @@ The system is organised into five layers:
 | Data Access | Repositories + Storage Tools | One repository per domain object                                                                        | Only layer that reads and writes data        |
 | Persistence | PostgreSQL + Object Storage  | Database for forms and JSON; file storage for uploads and exports                                       | Large files stay outside the database        |
 
-#### 3.1.4 API / Data Flow Explanation
-
-All non-login APIs use HTTPS JSON requests with a valid JWT.
-
-Controllers validate requests, services process them, and repositories read and write data.
+#### 3.1.3 API / Data Flow Explanation
 
 | Step                  | Example API                              | Data Flow                                                                              |
 | :-------------------- | :--------------------------------------- | :------------------------------------------------------------------------------------- |
@@ -308,7 +230,7 @@ Controllers validate requests, services process them, and repositories read and 
 | 6. Plan + Export      | Generate, update, and export lesson plan | AI uses summaries and approved actions; lesson plans and exported files are saved      |
 | 7. Research Dashboard | Get interaction statistics               | Anonymous teacher actions are summarised for researchers                               |
 
-#### 3.1.5 Initial Database Entity List
+#### 3.1.4 Initial Database Entity List
 
 ![Database Entity Diagram](imgs/微信图片_20260620192553_629_2580.png)
 
@@ -327,41 +249,8 @@ Controllers validate requests, services process them, and repositories read and 
 | `exports`              | `export_id`, `plan/version id`, `format`, `storage URI`                                      | Exported Word/PDF records       |
 | `interaction_logs`     | `log_id`, `user/recommendation id`, `event`, `metadata JSON`                                 | Anonymous research logs         |
 
-#### 3.1.6 Backend / Service Layer Explanation
 
-The backend is divided into three main layers:
-
-* **FastAPI Controllers**
-* **Services**
-* **Repositories**
-
-Controllers route requests, authenticate users, and validate data. Services contain business logic. Repositories handle persistent reads and writes.
-
-This layered structure keeps modules smaller, clearer, and easier to test.
-
-The service layer includes the following modules:
-
-1. **Data Services**
-
-   These services validate uploaded files, clean student learning data, and generate analytics.
-
-2. **Recommendation Services**
-
-   These services create teaching strategy recommendations and AI reasoning explanations.
-
-3. **Decision Services**
-
-   These services store teacher review records, including accepted, rejected, edited, and commented recommendations.
-
-4. **Prompt and Plan Services**
-
-   These services call the AI model only after teacher approval. They use lesson context, analytics summaries, approved teacher decisions, and templates to generate lesson plan content.
-
-5. **Export, Version, and Log Services**
-
-   These services keep lesson plan versions, exported files, and teacher interaction records traceable.
-
-#### 3.1.7 Privacy and AI Boundary
+#### 3.1.5 Privacy and AI Boundary
 
 Privacy is treated as a strict design requirement.
 
