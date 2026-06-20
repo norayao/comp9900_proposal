@@ -528,36 +528,15 @@ The chosen design is preferable because:
 
 ### 3.4 Functionality Mapping
 
-The table below maps the project’s major objectives and functionalities to the corresponding user stories. This demonstrates how the proposed design satisfies the project scope and ensures that each important feature is traceable to the product backlog.
+The following table shows the project objectives, main functions, and related user stories.
 
-| Project Objective / Functionality              | Related User Stories                          | Justification                                                                                                                                                                           |
-| :--------------------------------------------- | :-------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Lesson context input                           | P25-1                                         | The teacher enters year level, subject area, topic, learning outcomes, lesson goals, learner needs, and constraints. This context guides later analytics and recommendation generation. |
-| CSV/Excel student data upload                  | P25-2                                         | The upload function allows teachers to provide synthetic or de-identified learning data for analysis. This is the foundation for data-informed planning.                                |
-| Data preview                                   | P25-3                                         | The preview function allows teachers to verify the uploaded dataset before analysis. This reduces the risk of using incorrect or incomplete data.                                       |
-| Column mapping                                 | P25-4                                         | Since datasets may use different formats, column mapping allows the system to interpret fields such as student ID, score, topic, skill area, and learning outcome.                      |
-| Basic learning analytics                       | P25-5                                         | The analytics module shows class averages, topic performance, low-scoring items, common areas of difficulty, and possible extension opportunities.                                      |
-| Initial recommendation with visible reasoning  | P25-6                                         | The system provides early recommendations with supporting evidence and expert lesson planning reasoning, making AI decision-making more transparent.                                    |
-| Risk and opportunity summary                   | P25-7                                         | The system summarises class-wide risks, strengths, support needs, and extension opportunities using careful, non-deterministic language.                                                |
-| Student grouping suggestions                   | P25-8                                         | The system suggests possible student groups based on learning needs, mixed ability, or extension opportunities, with rationale provided for teacher review.                             |
-| Differentiation recommendations                | P25-9                                         | The system recommends strategies such as reteaching, scaffolding, targeted practice, peer support, and extension based on analytics and learning outcomes.                              |
-| Outcome-activity-assessment alignment          | P25-10                                        | Each recommendation explains how it aligns with learning outcomes, learning activities, and assessment evidence.                                                                        |
-| Teacher accept/reject/modify/annotate workflow | P25-11                                        | Teachers remain responsible for final decisions by reviewing and modifying AI-generated recommendations before they are used in a lesson plan.                                          |
-| Teacher reflection prompts                     | P25-12                                        | Reflection prompts encourage teachers to justify why they accepted, rejected, or changed recommendations, supporting professional judgement development.                                |
-| AI-supported draft lesson plan                 | P25-13                                        | The system generates a draft lesson plan using teacher context, analytics summaries, approved recommendations, and teacher decisions.                                                   |
-| Lesson plan editing                            | P25-14                                        | Teachers can edit lesson objectives, activities, differentiation notes, assessment tasks, and teacher notes before finalising the plan.                                                 |
-| Lesson plan export                             | P25-15                                        | The system exports the final lesson plan in a usable format such as Word, PDF, or structured text, allowing use outside the platform.                                                   |
-| Revision history                               | P25-16                                        | The system records original AI recommendations, teacher decisions, modified content, and final lesson plan components to support traceability.                                          |
-| Educator/researcher dashboard                  | P25-17                                        | The dashboard shows anonymised teacher interaction patterns, helping educators or researchers understand how teachers engage with AI recommendations.                                   |
-| Documentation and handover                     | P25-18                                        | The team documents prompt structure, analytics logic, recommendation rules, assumptions, limitations, testing outcomes, and deployment instructions.                                    |
-| Privacy-aware AI workflow                      | P25-2, P25-5, P25-6, P25-11, P25-13           | The system avoids sending raw student files to AI models. AI only receives summaries, approved actions, and templates, supporting responsible use of student data.                      |
-| Human-in-the-loop lesson planning              | P25-6, P25-10, P25-11, P25-12, P25-13, P25-14 | The system requires teacher review before recommendations become part of a final lesson plan, ensuring that AI supports rather than replaces teacher judgement.                         |
+![Functionality Mapping](imgs/5.png)                   
 
 ------
 
 ### 3.5 Design Justifications
 
-The system is designed based on Cognitive Apprenticeship theory. The project aims to develop an AI-assisted lesson planning guidance tool, rather than only a lesson plan generator. It helps teachers create lesson plans while also showing the reasoning behind them.
+The system is designed based on the theory of cognitive apprenticeship. This project aims to develop an artificial intelligence-assisted curriculum planning guidance tool. It can help teachers create curriculum plans and show the logic behind them.
 
 For example, the system explains the data evidence, the connection with learning outcomes, the reason for activity design, the choice of assessment methods, and the logic of differentiated teaching. In this way, novice teachers can better connect student learning data, learning outcomes, learning activities, assessment strategies, and learner needs.
 
@@ -583,7 +562,7 @@ Although this MVP can support data analysis and expert reasoning, there are stil
 
 ![4](imgs/4.png)
 
-Overall, the MVP design gives priority to explainability, feasibility, privacy protection, and teacher control. Complex models, full retrieval-augmented generation, and advanced learning analytics can be considered as future work. The current version focuses on clearly showing the relationship between student data, recommendations, expert reasoning, and teacher decisions.
+Overall, the MVP design gives priority to explainability, feasibility, privacy protection, and teacher control. Complex models, full retrieval-augmented generation, and advanced learning analytics can be considered as future work. At present, the system focuses on clearly showing the relationship between student data, suggestions, expert reasoning and teachers' decisions.
 
 ## 4. References
 
