@@ -103,20 +103,29 @@ By making expert reasoning visible, the system aims not only to reduce the effor
 
 ### 2.1 Scope Statement
 
-Pre-service teachers will be given a web-based AI-mediated lesson planning mentor. The prototype will support lesson context input, upload of CSV/Excel student learning data, data preview, column mapping, learning analytics, recommendation generation with visible expert reasoning, teacher accept/reject/modify decisions, editable lesson plan construction, revision history, and Word/PDF export. The system will only use synthetic or de-identified data. It will not integrate with live school systems, use identifiable student information, train a new AI model, or substitute for teacher judgement.
+We are going to deliver a web-based AI-mediated lesson planning mentor for pre-service teachers. The prototype will support inputting lesson context. It can also support uploading CSV or Excel student learning data. It will support data mapping and learning analytics. It can generate recommendations with expert reasoning explanations. Teachers can make decisions like accept, reject, modify, or annotate. It allows for the construction of an editable lesson plan. It keeps a revision history and supports Word or PDF export. The system won’t work as an automated lesson generator. It won’t use identifiable student data or integrate with live school systems.
 
 #### Out of Scope
 
 The following items are outside the scope of this project:
 
-- **Live system integration:** The prototype will not integrate with live UNSW, school, Department of Education, or learning management systems. It will be designed as a proof of concept using uploaded CSV or spreadsheet data.
-- **Identifiable student data:** The system will only use synthetic or de-identified student learning data. It will not ask for identifiable student information.
-- **Automated lesson plan generation without teacher review:** The system will not generate a final lesson plan without teacher decision points. Teachers must review, accept, reject, modify, or add notes to AI-generated recommendations before using them in the lesson plan.
-- **Replacing teacher judgement:** The system will not make final pedagogical decisions for the teacher. The teacher remains responsible for understanding the data, evaluating AI suggestions, and creating the final lesson plan.
+- **Live system integration:** The prototype won’t integrate with live UNSW, school, Department of Education, or learning management systems. It will be designed as a proof of concept using uploaded CSV or spreadsheet data.
+
+- **Identifiable student data:** The system will only use synthetic or de-identified student learning data. It won’t ask for identifiable student information.
+
+- **Automated lesson plan generation without teacher review:** The system won’t generate a final lesson plan without teacher decision points. Teachers have to review, accept, reject, modify, or add notes to AI-generated recommendations before using them in the lesson plan.
+
+- **Replacing teacher judgement:** The system won’t make final pedagogical decisions for the teacher. The teacher is still responsible for understanding the data, evaluating AI suggestions, and creating the final lesson plan.
 
 #### Client Approval Evidence
 
-The project scope will be confirmed with the client, Sara Mashayekh, through email and/or meeting notes. After the first discussion with the client, the Product Owner will request confirmation of the proposed scope and keep a screenshot or written record of the client’s approval or feedback.
+The project scope has been confirmed with the client, Sara Mashayekh, through email. After the first discussion with the client, the Product Owner sent an email to confirm the proposed scope, Demo 1 expectations, major features, and items that are out of scope.
+
+The client replied that the proposed scope aligns well with her expectations. She also confirmed that the project should focus on student data analysis, AI-supported recommendations, teacher review and control, editable lesson plan construction, and export functionality.
+
+The client has said that Demo 1 should show the full end-to-end workflow. So, our first demo scope will focus on a complete but simple functional prototype. This prototype includes lesson context input, student data upload and mapping, basic learning analytics, AI-supported recommendations with visible reasoning, teacher review decisions, lesson plan construction, and export.
+
+A screenshot of the client’s confirmation email is included below as the evidence of client approval.
 
 ![client_scope_confirmation](imgs/client_scope_confirmation.png)
 
