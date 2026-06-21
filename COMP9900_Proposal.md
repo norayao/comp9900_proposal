@@ -346,29 +346,29 @@ The following table shows the project objectives, main functions, and related us
 
 ------
 
-### 3.5 Design Justifications
+### 3.4 Design Justifications
 
 The system is designed based on the theory of cognitive apprenticeship. This project aims to develop an artificial intelligence-assisted curriculum planning guidance tool. It can help teachers create curriculum plans and show the logic behind them.
 
 For example, the system explains the data evidence, the connection with learning outcomes, the reason for activity design, the choice of assessment methods, and the logic of differentiated teaching. In this way, novice teachers can better connect student learning data, learning outcomes, learning activities, assessment strategies, and learner needs.
 
-#### 3.5.2 Subproblem Breakdown and Proposed Solutions
+#### 3.4.2 Subproblem Breakdown and Proposed Solutions
 
 ![1](imgs/1.png)
 
-#### 3.5.3 Alternative Solutions Considered
+#### 3.4.3 Alternative Solutions Considered
 
 Considering the project objectives, project timeline, system feasibility, privacy risks, and the theoretical direction of Group B, the project team compared several feasible methods, as shown in the table below.
 
 ![2](imgs/2.png)
 
-#### 3.5.4 Novel Functionality Beyond Existing Systems
+#### 3.4.4 Novel Functionality Beyond Existing Systems
 
 The project team studied two existing system categories: generative AI lesson planning tools and learning analytics dashboards. The limitations of these existing systems and the innovations of MentorPlan AI are shown in the table below.
 
 ![3](imgs/3.png)
 
-#### 3.5.5 Limitations and Mitigation Strategies
+#### 3.4.5 Limitations and Mitigation Strategies
 
 Although this MVP can support data analysis and expert reasoning, there are still some limitations, as shown in the table below.
 
