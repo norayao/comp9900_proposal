@@ -198,9 +198,7 @@ The product backlog below contains user stories not yet committed to Sprint 1. T
 
 ![System Architecture Diagram](imgs/微信图片_20260620192552_628_2580.png)
 
-Dashed boxes represent third-party services.
-
-The System Architecture Diagram presents the layered architecture of MentorPlan AI. The frontend handles teacher-facing workflows, while the FastAPI controller layer only performs routing, JWT authentication, and request validation. Business logic is placed in the service layer, including data cleaning, learning analytics, recommendation generation, expert reasoning, teacher decisions, prompt building, lesson plan generation, revision history, export, and interaction logging.
+The diagram above shows the layered architecture. At the first layer, the frontend handles teacher-facing workflows. Then, the FastAPI controller layer performs routing, JWT authentication, and request validation. After that, the service layer is responsible for the business logic, including data cleaning, learning analytics, recommendation generation, expert reasoning, teacher decisions, prompt building, lesson plan generation, revision history, export, and interaction logging. Then, at the data access layer, the SQLAlchemy repositories handle the database and an Object Storage Client handles files. In the end, the persistence layer stores structured records and JSONB data in PostgreSQL, and raw CSV/Excel uploads and exported Word/PDF files still stay in object storage.
 
 
 #### 3.1.2 Component Description Table
@@ -249,11 +247,7 @@ The System Architecture Diagram presents the layered architecture of MentorPlan 
 
 #### 3.1.5 Privacy and AI Boundary
 
-Privacy is treated as a strict design requirement.
-
-Raw student files remain in object storage and are not sent directly to the AI model. The AI only receives summaries, approved teacher actions, and templates. Teachers review AI suggestions before those suggestions are used in final lesson plans.
-
-This design reduces privacy risk, supports teacher agency, and ensures that AI remains a decision-support tool rather than a replacement for teacher judgement.
+About privacy, the raw student files will remain in the object storage, but will not sent to the AI model directly. The model will only receive data such as summaries, approved teacher actions, and templates. 
 
 ---
 
