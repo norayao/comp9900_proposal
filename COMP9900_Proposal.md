@@ -262,271 +262,83 @@ This design reduces privacy risk, supports teacher agency, and ensures that AI r
 
 ### 3.2 Interface Storyboarding
 
-To illustrate the proposed user interactions and frontend layout of MentorPlan AI, we developed a set of high-fidelity interface storyboards. These storyboards demonstrate the major system functions, including course overview, lesson management, student data management, AI-supported data analysis, recommendation generation, and lesson plan export.
+These set of storyboards are the main interfaces of our application, that show the UI layout and a part of user interactions.
 
-The interface follows a dashboard-based web application structure. A persistent top navigation bar allows teachers to move between Dashboard, Lessons, Students, and AI Planner. The AI Planner uses a step-by-step workflow: **Data & Analysis → Recommendations → Review & Export**. This design helps teachers progressively move from reviewing student data to understanding AI reasoning and finally exporting a teacher-approved lesson plan.
+We will use these storyboards to introduce how teachers work with functions, including term overview, lesson review, student data and AI-supported analysis that support lesson plan. 
 
 #### 3.2.1 Dashboard Page
 
 ![1-Dashboard](imgs/1-Dashboard.png)
 
-**Covered user stories:** P25-5, P25-7, P25-8, P25-17
+**Related user stories:** P25-5, P25-7, P25-8, P25-17
 
-The Dashboard page provides teachers with a high-level overview of their teaching term, courses, student performance distribution, and lesson planning progress. The page uses a clean card-based layout with a dark top navigation bar and a light background to separate navigation from working content.
+The Dashboard provides the overview of all courses and their weekly progress. It includes two parts: Term Overview and Lesson Overview.
 
-The upper section, Term Overview, visualises multiple courses across weekly timelines. Each course row shows the current stage of the term and the distribution of student learning levels, such as Initial, High, Mid, and Low. This allows teachers to quickly identify which courses are active, which ones have not started, and which groups may require further support.
+The Term Overview section can be considered as a variation of a flow chart. It contains courses across the whole term, with learning levels (Initial, High, Mid, and Low). This helps teachers get a quick view of the term before they opening a specific course.
 
-The lower section, Lesson Overview, displays course cards. Each card summarises course name, term, week progress, completion percentage, number of students, and support group estimates. For active courses, the card shows support categories such as Intensive Support, Targeted Support, Core Instruction, and Extension. For future courses, the card is visually disabled and marked as not started.
-
-This storyboard supports the system objective of helping teachers interpret class-level learning patterns quickly. It also provides an entry point into more detailed lesson planning and support group analysis.
-
-**Main interactions:**
-
-* The teacher can switch between courses using the dashboard cards.
-* The teacher can view the current term progress and course completion status.
-* The teacher can identify which student support groups may need attention.
-* The teacher can click into a course or lesson card to continue planning.
+The Lesson Overview section uses course cards to provide more information about each course. It includes the course name, number of students, and estimated support groups. Courses in the current term will be displayed some support groups such as Intensive Support, Targeted Support, Core Instruction, and Extension, while future courses are visually separated to reduce distraction from current planning work.
 
 #### 3.2.2 Lessons Page
 
 ![2-Lessons_Page](imgs/2-Lessons_Page.png)
 
-**Covered user stories:** P25-5, P25-7, P25-8, P25-9, P25-10
+**Related user stories:** P25-5, P25-7, P25-8, P25-9, P25-10
 
-The Lessons page provides a course-level view for a selected subject. A left sidebar lists available courses, while the main content area shows detailed information about the selected course. This layout allows teachers to switch between courses without leaving the lesson management workflow.
+The Lessons page presents more detailed information once the teacher selects a course. A course list is placed on the left side to help teachers easily switch between courses. 
 
-At the top of the main panel, the selected course card displays course code, term, number of students, current week, completion percentage, and overall student distribution. This gives teachers a quick understanding of the course context before making planning decisions.
+While the main panel shows the course summary, including basic cource information like course code, term, number of students, current week, completion percentage, and student distribution.
 
-The Support Groups section summarises student groupings into categories such as Intensive Support, Targeted Support, Core Instruction, and Extension. Each support group card shows the number of students in that group and provides editing or management actions. This supports teacher control over AI-assisted grouping rather than forcing teachers to accept system-generated categories.
+The second section is Support Groups, it shows groups such as Intensive Support, Targeted Support, Core Instruction, and Extension. Each group card displays the number of students and provides actions for editing or managing the group. 
 
-The AI Group Analysis section presents reasoning based on the current support group distribution. It explains patterns such as repeated low scores, high-achieving students requiring enrichment, or noticeable improvement after previous interventions. These explanations help make the AI reasoning process visible and interpretable.
-
-The Assessments & Projects section lists assessment items, quizzes, exams, and projects. Each row shows submission progress, average score, and status. This helps teachers connect student data sources with lesson planning decisions.
-
-**Main interactions:**
-
-* The teacher can select different courses from the sidebar.
-* The teacher can review support group distribution.
-* The teacher can add, edit, or apply support groups.
-* The teacher can inspect AI-generated group analysis.
-* The teacher can view assessments and projects as evidence sources for planning.
+Also, as an AI drived Web Application, we provide the AI Group Analysis section which is able to analyze current student data, identify their unique strengths and learning weaknesses, also help teachers effectively group students through appropriate aggregation. Later features will provide further suggestions and assistance to each generated group.
 
 #### 3.2.3 Students Page
 
 ![3-Students_Page](imgs/3-Students_Page.png)
 
-**Covered user stories:** P25-2, P25-3, P25-4, P25-5
+**Related user stories:** P25-2, P25-3, P25-4, P25-5
 
-The Students page focuses on student data management and upload status. It supports the data preparation stage before analytics and AI planning. The page includes course filters, privacy notice, student table, upload actions, and assessment submission summaries.
+The main function of the Student Page is to provide a place for teachers to review and verify student data. Teachers can view all uploaded student data here and also upload new data for AI-assisted analysis.
 
-At the top of the page, course filter tabs allow teachers to view all students or only students from a specific course. A privacy notice reminds users that student data is handled according to privacy policy requirements. This reinforces the project’s design principle that only synthetic or de-identified student data should be used.
+The data uploaded by teachers will be automatically categorized by AI under the created course items, providing a foundation for the next step of lesson plan creation.
 
-The main student table shows student ID, name, upload status, performance level, and special support category. Students with uploaded data are marked as Uploaded, while those without submitted data are marked as Pending and provide an Upload Data action. This helps teachers identify missing datasets before running analytics.
-
-The lower part of the page lists assessment items such as assignments, quizzes, and exams. Each item includes submission progress, such as how many students have submitted data. This supports the data preview and verification workflow because teachers can check whether enough student data is available before proceeding to analysis.
-
-**Main interactions:**
-
-* The teacher can filter students by course.
-* The teacher can bulk upload student data.
-* The teacher can upload data for individual students.
-* The teacher can review upload status and identify missing submissions.
-* The teacher can expand assessment rows to inspect submission coverage.
-
-#### 3.2.4 AI Planner: Data & Analysis Page
+#### 3.2.4. AI Planner: Data & Analysis Page
 
 ![4.1-AI_Planner_DataAnalysis_Page](imgs/4.1-AI_Planner_DataAnalysis_Page.png)
 
-**Covered user stories:** P25-1, P25-2, P25-3, P25-4, P25-5, P25-6
+**Related user stories:** P25-1, P25-2, P25-3, P25-4, P25-5, P25-6
 
-The AI Planner begins with the Data & Analysis step. This screen allows teachers to choose the student data sources that will be used for AI-supported lesson planning. The left sidebar lists the teacher’s active plans, while the top stepper shows the three-stage workflow: Data & Analysis, Recommendations, and Review & Export.
+The AI Planner function start from the Data & Analysis page. In this step, teachers select which item and data they want to use for analysis, such as exams,  assignments, or knowledge checkpoints.
 
-The Student Data Source section lists available datasets, including exams, quizzes, assignments, and knowledge mastery checkpoints. Each dataset card shows the data type, title, week, number of students, coverage percentage, and upload time. Teachers can select one or more datasets for analysis. This design gives teachers control over which evidence is used by the system.
-
-The Student Distribution section shows a summary of student performance groups for the selected dataset. In the example, students are divided into High, Mid, and Low groups with counts and percentage shares. Teachers can also view the details of each group.
-
-The Teacher Input: Student Context section allows teachers to add contextual information that cannot be fully captured by numerical assessment data, such as class background, communication issues, project progress, or learning constraints. This supports more personalised and pedagogically appropriate AI recommendations.
-
-A right-side AI Mentor panel explains the thinking process. It summarises how the AI interprets student distribution, identifies priority areas, and selects suitable activity types. This sidebar supports the system’s “why” effect by making the reasoning process visible rather than only showing final recommendations.
-
-**Main interactions:**
-
-* The teacher selects one or more uploaded datasets.
-* The teacher reviews data coverage and student distribution.
-* The teacher adds student context to personalise recommendations.
-* The AI Mentor panel displays visible reasoning based on selected data.
-* The teacher proceeds from data analysis to recommendation generation.
+Each dataset card shows the data type, title, week, student count, coverage percentage, and upload time. After selection, the Student Distribution section summarises the data into groups. Teachers can also add more context in the Teacher Input section, which allows the system to consider information and opinions that directly from teachers. The AI Mentor panel provides an initial reasoning note based on the selected data and teacher input.
 
 #### 3.2.5 AI Planner: Recommendations Page
 
 ![4.2-AI_Planner_Recommends](imgs/4.2-AI_Planner_Recommends.png)
 
-**Covered user stories:** P25-6, P25-8, P25-9, P25-10, P25-11, P25-12
+**Related user stories:** P25-6, P25-8, P25-9, P25-10, P25-11, P25-12
 
-The Recommendations page presents AI-generated lesson activity suggestions based on the selected student data and teacher-provided context. The page uses recommendation cards to display multiple possible teaching strategies instead of producing one final lesson plan immediately. This keeps the teacher in control of pedagogical decision-making.
+The Recommendations page presents AI-supported lesson suggestions. The suggestions are organised into categories, such as Learning Activities and Differentiation, so teachers can separately review different types of planning support .
 
-The top stepper shows that the teacher has completed Data & Analysis and is now in the Recommendations stage. Recommendation categories include Learning Activities, Differentiation, Assessment, and Resources. This tab structure allows recommendations to be organised according to different lesson planning needs.
-
-Each recommendation card contains an activity title, activity type, estimated duration, short description, addressed skills, suitability tags, and an Add to Plan button. Examples include Concept Mapping, Open-Group Investigation, Expert Evidence Reasoning, Guided Scaffolded Practice, Reflection Journal, and Peer Teach-Back. Suitability tags such as High, Mid, Low, Extension, or All Levels show which student groups the activity is designed for.
-
-The AI Mentor panel remains visible on the right side of the page. It explains the reasoning process behind the recommendations, including how student distribution was analysed, how priority areas were identified, and why particular activity types were selected. This design directly addresses the limitation of black-box AI tools by making the recommendation logic visible.
-
-**Main interactions:**
-
-* The teacher switches between recommendation categories.
-* The teacher reads the evidence and rationale behind each recommendation.
-* The teacher adds selected recommendations to the lesson plan.
-* The teacher can regenerate recommendations when needed.
-* The teacher can use the AI Mentor panel to understand the reasoning behind the suggestions.
+Teachers can browse all the suggestion cards and their corresponding student groups, select the most suitable solution, and if any solution needs improvement, teachers can click on the corresponding card and provide suggestions in the AI dialog box on the right.
 
 #### 3.2.6 AI Planner: Review & Export Page
 
 ![4.3-AI_Planner_Review&Export](imgs/4.3-AI_Planner_Review&Export.png)
 
-**Covered user stories:** P25-11, P25-13, P25-14, P25-15, P25-16
+**Related user stories:** P25-11, P25-13, P25-14, P25-15, P25-16
 
-The Review & Export page is the final stage of the AI Planner workflow. It allows teachers to review selected lesson plan components before exporting or saving the final plan. This ensures that the output is based on teacher-approved decisions rather than generated directly from raw student data.
+The Review & Export page is the final step of the AI Planner workflow. The page provides a button to export the lesson plan as a PDF or save it to resources. The AI Mentor panel keeps the reasoning trail visible, once the teacher want to check how the final plan relates to the earlier data analysis and recommendations. In this way, the final lesson plan is based on teachers' thinking and choices rather than only being generated from student data.
 
-The main panel shows a Lesson Plan Summary containing selected activities such as Concept Mapping, Open-Group Investigation, and Expert Evidence Reasoning. Each item includes the activity type and estimated duration. The selected activities are shown in a concise summary format so that teachers can confirm whether the final plan matches their instructional goals.
+#### 3.2.7 Overall Workflow
 
-Below the summary, teachers can choose to Export as PDF or Save to Resources. Exporting supports use outside the system, while saving to resources allows the plan to be reused or revised later. This supports both immediate classroom use and longer-term lesson planning workflows.
+The whole workflow starts from the Dashboard, where teachers can check term progress and courses. They then can open the Lessons page to review course details and assessment information, divided students into groups and give them specific helps. After that, Students page can be used to check or upload student data. Finally, enter AI Planner to select uploaded data, after reviewing AI-supported recommendations, teachers confirm and export the final lesson plan.
 
-The AI Mentor panel remains visible on the right side, showing the reasoning trail that led to the selected plan. This helps teachers review whether the final lesson plan still aligns with the original data analysis and recommendation logic.
-
-**Main interactions:**
-
-* The teacher reviews selected lesson activities.
-* The teacher confirms that the lesson plan reflects their decisions.
-* The teacher exports the final plan as a PDF.
-* The teacher saves the plan to resources for future use.
-* The system preserves the planning and reasoning trail for revision history.
-
-#### 3.2.7 Overall Navigation Flow
-
-The storyboarded workflow can be summarised as follows:
-
-1. The teacher starts from the **Dashboard** to review course progress and support group distribution.
-2. The teacher opens the **Lessons** page to inspect course-level assessments, support groups, and AI group analysis.
-3. The teacher uses the **Students** page to upload or verify student data.
-4. The teacher enters the **AI Planner** and selects relevant datasets in **Data & Analysis**.
-5. The system generates interpretable recommendations in the **Recommendations** stage.
-6. The teacher reviews selected items and exports the final plan in **Review & Export**.
-
-This flow supports the project goal of building an AI-mediated teacher decision support tool. The system does not replace teacher judgement. Instead, it helps teachers interpret student data, understand the reasoning behind recommendations, make informed pedagogical decisions, and export a final lesson plan based on approved actions.
+Across these storyboards, MentorPlan AI provides evidence-based lesson planning and keeping teachers involved in each decision making.
 
 ---
 
-### 3.3 Design Justifications
-
-#### 3.3.1 Decomposing the Problem into Manageable Subproblems
-
-The overall problem is that pre-service teachers may struggle to interpret student learning data and transform it into evidence-based lesson planning decisions. To make this problem manageable, the project is divided into the following subproblems:
-
-1. **Data collection and preparation**
-
-   Teachers need a way to upload student learning data from sources such as CSV or Excel files. Since different datasets may use different column names or formats, the system must support data preview, column mapping, validation, and cleaning.
-
-2. **Learning analytics generation**
-
-   The system needs to identify class-level patterns, low-scoring areas, common mistakes, strengths, risks, and extension opportunities from the uploaded data.
-
-3. **Visible AI reasoning**
-
-   Instead of simply generating a lesson plan, the system must explain why a recommendation is made, what data evidence supports it, and how it connects to learning outcomes, activities, and assessment.
-
-4. **Teacher decision-making workflow**
-
-   Teachers must remain active decision-makers. They need to be able to accept, reject, edit, or annotate AI-generated recommendations before these suggestions are used in a final lesson plan.
-
-5. **Lesson plan construction and export**
-
-   Approved teacher decisions should be assembled into an editable lesson plan. The final plan should be exportable for use outside the system.
-
-6. **Privacy and traceability**
-
-   Since student data is involved, the system must avoid sending raw student files to AI models. It should also keep records of teacher decisions, plan versions, exports, and anonymised interaction logs.
-
-#### 3.3.2 Layered Architecture
-
-A layered architecture is chosen because it separates responsibilities clearly across the frontend, API layer, service layer, data access layer, and persistence layer.
-
-An alternative design would be to build a simpler monolithic backend where controllers directly process data, call AI services, and write to the database. This would be faster to implement at the beginning, but it would make the system harder to test, extend, and maintain. It would also increase the risk of mixing business logic, data access, and privacy-sensitive operations in the same component.
-
-The chosen layered design is more suitable for this project because:
-
-* Controllers remain lightweight and only handle routing, validation, and authentication.
-* Services contain the main workflow and business logic.
-* Repositories isolate database and file storage operations.
-* The AI adapter hides differences between LLM providers.
-* Privacy rules can be enforced at the service and AI boundary layers.
-
-This design supports future extension, such as adding new data formats, new recommendation types, or new AI model providers.
-
-#### 3.3.3 Human-in-the-Loop AI Design
-
-The project deliberately avoids generating a complete final lesson plan directly from raw data. Instead, the system first presents analytics and recommendations, then requires teacher review before a lesson plan is generated.
-
-An alternative approach would be a one-click AI lesson plan generator. This would be convenient, but it would reproduce the black-box limitation of existing generative AI tools. Teachers might receive a polished output without understanding why particular activities or strategies were recommended.
-
-The chosen human-in-the-loop design is more appropriate because:
-
-* Teachers can inspect the evidence behind recommendations.
-* Teachers can accept, reject, modify, or annotate AI suggestions.
-* The final lesson plan is based on approved decisions rather than raw AI output.
-* The system supports teacher agency and professional judgement.
-* The reasoning process helps pre-service teachers learn how data informs lesson planning.
-
-This aligns with the project’s goal of supporting cognitive apprenticeship by making expert reasoning visible.
-
-#### 3.3.4 AI Boundary and Privacy Protection
-
-The system uses a strict AI boundary. Raw student files are kept in object storage and are not sent directly to the AI model. The AI only receives lesson context, analytics summaries, approved teacher decisions, and templates.
-
-An alternative approach would be to send the full uploaded CSV or Excel file directly to an LLM for analysis. This could reduce backend development effort, but it creates privacy risks and makes the system overly dependent on the AI model’s interpretation of raw data.
-
-The chosen design is safer and more controlled because:
-
-* Raw student data remains inside the system.
-* The backend can clean, validate, and summarise data before AI interaction.
-* AI prompts are based on structured summaries rather than uncontrolled raw files.
-* Teacher-approved decisions are used before final plan generation.
-* The system can provide clearer audit trails and revision history.
-
-This design reduces privacy risk and supports responsible AI use in educational contexts.
-
-#### 3.3.5 Structured Recommendation and Alignment Design
-
-Recommendations are designed to include evidence, reasoning, differentiation, and outcome-activity-assessment alignment. This means each recommendation should explain not only what the teacher could do, but also why it is appropriate.
-
-An alternative design would be to show only activity suggestions, such as “use group work” or “provide scaffolding”. However, this would not adequately support pre-service teachers because it would not explain how the suggestion relates to student data or learning outcomes.
-
-The chosen design provides additional value because:
-
-* Teachers can see which data patterns triggered each recommendation.
-* Recommendations are linked to learning outcomes and classroom activities.
-* Differentiation strategies can be matched to different support groups.
-* Teachers can compare multiple options before deciding.
-* The system provides novel functionality beyond standard learning analytics dashboards.
-
-This helps bridge the gap between data visualisation and pedagogical action.
-
-#### 3.3.6 Object Storage for Files and PostgreSQL for Structured Data
-
-The system separates file storage from structured data storage. PostgreSQL stores user accounts, lesson contexts, mappings, analytics results, recommendations, teacher decisions, lesson plans, versions, exports, and logs. Object storage stores larger files such as raw CSV/Excel uploads and exported Word/PDF files.
-
-An alternative approach would be to store all files directly inside the relational database. This would simplify storage in the short term, but it would make the database larger and less efficient.
-
-The chosen design is preferable because:
-
-* Large files are kept outside the database.
-* Structured records remain easy to query.
-* File metadata can still be tracked in PostgreSQL.
-* Exported documents can be stored and retrieved efficiently.
-* The design is easier to scale if more datasets or exports are added later.
-
----
-
-### 3.4 Functionality Mapping
+### 3.3 Functionality Mapping
 
 The following table shows the project objectives, main functions, and related user stories.
 
