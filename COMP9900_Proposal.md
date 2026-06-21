@@ -130,9 +130,9 @@ Below is the screenshot of the client’s confirmation email, as proof that the 
 ![client_scope_confirmation](imgs/client_scope_confirmation.png)
 
 ### 2.2 Sprint 1 User Stories
-This section discusses the Scrum planning of MentorPlan AI. Sprint 1 is stuck in foundation and core enabling functionality, including lesson context input, CSV/Excel upload, data preview, column mapping, basic learning analytics and an initial recommendation explanation. More advanced features like human-in-the-loop decision review, AI assisted lesson plan generation, revision history, export, and the educator/researcher dashboard are in the product backlog for future sprint planning.
+In this part, the planning process of Scrum for MentorPlan AI is highlighted. The first Sprint has been stuck with foundation/core functionalities such as lesson context entry, CSV/Excel import, data view, column mapping, basic learning analytics, and preliminary explanation of recommendation. Other complex functionalities like human in the loop decision review, AI-assisted lesson plan creation, history, exporting, and dashboard for researcher/educator have not been included yet and are present in the product backlog.
 
-Total estimated product scope is 78 story points. Sprint 1 has 26 story points, which is approximately one-third of the total estimated work. We make this allocation to avoid both overcommitment and undercommitment and to ensure the team has a functional end-to-end foundation to show by the first progressive demo.
+Total expected product scope story points are 78. Sprint 1 contains 26 story points that account for one-third of the total expected workload. The reason we allocate like this is not to overcommit nor undercommit while ensuring that the team has a fully functioning platform at the end of the first demo.
 
 **Jira** **Evidence:**
 
@@ -140,11 +140,11 @@ Total estimated product scope is 78 story points. Sprint 1 has 26 story points, 
 
 | Jira Key | User Story | Priority | Story Points |
 | :--- | :--- | :--- | :---: |
-| **P25-1** | As a pre-service teacher, I want to enter lesson context, so that recommendations are aligned with my teaching goals. | High | 3 |
-| **P25-2** | As a pre-service teacher, I want to upload CSV/Excel student learning data, so that the system can analyse class learning patterns. | High | 5 |
-| **P25-3** | As a pre-service teacher, I want to preview uploaded data, so that I can verify the dataset before analysis. | High | 3 |
-| **P25-4** | As a pre-service teacher, I want to map data columns, so that the system can interpret different dataset formats. | High | 5 |
-| **P25-5** | As a pre-service teacher, I want to view basic learning analytics, so that I can understand class strengths and areas needing support. | High | 5 |
+| **P25-1** | As a pre-service teacher, I want to add lesson context so the recommendations match my teaching goals. | High | 3 |
+| **P25-2** | As a pre-service teacher, I want to upload student learning data in CSV or Excel format so the system can analyse learning patterns across the class. | High | 5 |
+| **P25-3** | As a pre-service teacher, I want to preview the uploaded data so I can check the dataset before analysis. | High | 3 |
+| **P25-4** | As a pre-service teacher, I want to map data columns so the system can understand different dataset formats. | High | 5 |
+| **P25-5** | As a pre-service teacher, I want to see basic learning analytics so I can understand the class’s strengths and areas that need support. | High | 5 |
 | **P25-6** | As a pre-service teacher, I want early recommendations to include visible reasoning, so that I can understand why a suggestion is made. | High | 5 |
 
 #### Sprint 1 Acceptance Criteria
@@ -176,20 +176,17 @@ The product backlog below contains user stories not yet committed to Sprint 1. T
 | **P25-13** | As a pre-service teacher, I want an AI-supported draft lesson plan based on approved decisions, so that I can construct a data-informed lesson plan efficiently. | High | 8 | Backlog | The system generates a draft lesson plan using teacher context, analytics summary, approved recommendations, and teacher decisions. The draft must not be generated directly from raw CSV data alone.|
 | **P25-14** | As a pre-service teacher, I want to edit the generated lesson plan, so that the final plan reflects my professional judgement. | High | 3 | Backlog | The lesson plan editor allows teachers to revise lesson objectives, activities, differentiation notes, assessment tasks, and teacher notes before export.|
 | **P25-15** | As a pre-service teacher, I want to export the final lesson plan, so that I can use it outside the system. | Medium | 3 | Backlog | The system exports the final lesson plan in a usable format such as Word, PDF, or structured text.|
-| **P25-16** | As a pre-service teacher, I want to view revision history, so that I can see how the AI suggestions changed after teacher review. | Medium | 3 | Backlog | The system records the original AI recommendation, teacher decision, modified content, and final lesson plan component.|
-| **P25-17** | As an educator or researcher, I want to view anonymised teacher interaction patterns, so that I can understand how teachers accept, reject, modify, or annotate AI recommendations. | Medium | 5 | Backlog | The dashboard shows anonymised counts and summaries of teacher interactions with AI recommendations. No identifiable student information is displayed.|
-| **P25-18** | As a project stakeholder, I want prompt design, decision logic, testing, and deployment documentation, so that the prototype can be demonstrated and handed over transparently. | Medium | 4 | Backlog | The team documents prompt structure, analytics logic, recommendation rules, assumptions, limitations, testing outcomes, and deployment or demonstration instructions.|
+| **P25-16** | As a pre-service teacher, I want to view revision history, so that I can see how the AI suggestions changed after teacher review. | Medium | 3 | Backlog | The system keeps a record of the original AI recommendation, the teacher’s decision, any modified content, and the final lesson plan component.|
+| **P25-17** | As an educator or researcher, I want to view anonymised teacher interaction patterns, so that I can understand how teachers accept, reject, modify, or annotate AI recommendations. | Medium | 5 | Backlog | The dashboard presents anonymised numbers and summaries of how teachers interact with AI recommendations. It does not show any identifiable student information.|
+| **P25-18** | As a project stakeholder, I want prompt design, decision logic, testing, and deployment documentation, so that the prototype can be demonstrated and handed over transparently. | Medium | 4 | Backlog | The team records the prompt structure, analytics logic, recommendation rules, assumptions, limitations, testing results, and deployment or demonstration instructions.|
 
 ### 2.4 Sprint Timeline and Milestones
-The project will be split into 3 main sprints. Sprint 1 is about the basic functionality. We expect that Sprint 2 will have the largest feature workload which will include recommendation reasoning, human-in-the-loop review and AI lesson plan generation. The team will also prepare for final demo, final report, software quality submission, documentation and project handover, so there is less development workload in Sprint 3.
-
-The assessment guidance recommends allocating roughly one third of the total estimated story points to Sprint 1, prioritising foundation functionality in Sprint 1, major feature integration in Sprint 2, and finalisation, testing, documentation and handover in Sprint 3. This informs the sprint allocation.
 
 | Sprint | Dates | Sprint Goal | Key Milestones / Deliverables |
 | :---: | :--- | :--- | :--- |
-| **Sprint 1** | Week 3 Wednesday after proposal submission – Week 5 Lab Time | Build the core foundation of the teacher workflow.| Lesson context form completed; CSV/Excel upload implemented; data preview implemented; column mapping prototype completed; basic analytics dashboard implemented; initial recommendation with visible expert reasoning generated; Sprint 1 review and retrospective prepared.|
-| **Sprint 2** | Week 5 Lab Time – Week 8 Lab Time | Implement major recommendation, reasoning, and human-in-the-loop functionality.| Risk and opportunity summary implemented; grouping recommendation with rationale implemented; differentiation recommendation with expert reasoning implemented; outcome-activity-assessment alignment explanation implemented; accept/reject/modify/annotate workflow implemented; teacher reflection prompts implemented; AI-supported lesson plan generation prototype completed; Sprint 2 progressive demo and retrospective prepared.|
-| **Sprint 3** | Week 8 Lab Time – Week 10 Lab Time | Finalise export, revision history, dashboard, testing, deployment, and documentation.| Lesson plan editor completed; export function implemented; revision history implemented; educator/researcher dashboard implemented; prompt and decision logic documentation completed; synthetic dataset and demonstration workflow prepared; system testing and UI polish completed; final demo, final report, software quality submission, and handover prepared.|
+| **Sprint 1** | Week 3 Wednesday after proposal submission – Week 5 Lab Time | Build the core foundation of the teacher workflow.| Contextualized lesson form done; CSV/Excel import done; data preview done; column map prototype done; basic analytical dashboard done; initial recommendation with reasoning from the expert done; Sprint 1 review and retrospective done.|
+| **Sprint 2** | Week 5 Lab Time – Week 8 Lab Time | Implement major recommendation, reasoning, and human-in-the-loop functionality.| Implemented risk and opportunity analysis summary; implemented grouping recommendation with reasoning; implemented differentiation recommendation with expert reasoning; explained connection between assessment outcomes and activities; implemented accept/modify/reject/annotate workflow; implemented prompts for teacher reflection; implemented prototype of AI-generated lesson plan; planned demo and retrospective for Sprint 2.|
+| **Sprint 3** | Week 8 Lab Time – Week 10 Lab Time | Finalise export, revision history, dashboard, testing, deployment, and documentation.| Editor for lesson plan created; exporting functionality provided; history revision added; educator/researcher dashboard created; documentation for prompts and decision-making process finished; synthetic data set and example workflow developed; testing and user interface finishing done; final demo, final report, software quality submission, and delivery planned.|
 
 ---
 
