@@ -103,7 +103,7 @@ By making expert reasoning visible, the system aims not only to reduce the effor
 
 ### 2.1 Scope Statement
 
-We are going to deliver a web-based AI-mediated lesson planning mentor for pre-service teachers. The prototype will support inputting lesson context. It can also support uploading CSV or Excel student learning data. It will support data mapping and learning analytics. It can generate recommendations with expert reasoning explanations. Teachers can make decisions like accept, reject, modify, or annotate. It allows for the construction of an editable lesson plan. It keeps a revision history and supports Word or PDF export. The system won’t work as an automated lesson generator. It won’t use identifiable student data or integrate with live school systems.
+The prototype will support input lesson context. We are going to deliver a web-based AI-mediated lesson planning mentor for pre-service teachers. It can also support uploading CSV or Excel student learning data. It will support data mapping and learning analytics. It can generate recommendations with expert reasoning explanations. Teachers can make decisions like accept, reject, modify, or annotate. It allows for the construction of an editable lesson plan. It keeps a revision history and supports Word or PDF export. The system won’t work as an automated lesson generator. It won’t use identifiable student data or integrate with live school systems.
 
 #### Out of Scope
 
@@ -123,9 +123,9 @@ The project scope has been confirmed with the client, Sara Mashayekh, through em
 
 The client replied that the proposed scope aligns well with her expectations. She also confirmed that the project should focus on student data analysis, AI-supported recommendations, teacher review and control, editable lesson plan construction, and export functionality.
 
-The client has said that Demo 1 should show the full end-to-end workflow. So, our first demo scope will focus on a complete but simple functional prototype. This prototype includes lesson context input, student data upload and mapping, basic learning analytics, AI-supported recommendations with visible reasoning, teacher review decisions, lesson plan construction, and export.
+So, our first demo will be a complete but simple functional prototype. It has these functions: input lesson background information, upload and map student data, do basic learning data analysis, get AI suggestions with clear reasons, let teachers check and make decisions, make lesson plans, and export files. The client said Demo 1 needs to show the whole work process from start to end.
 
-A screenshot of the client’s confirmation email is included below as the evidence of client approval.
+Below is the screenshot of the client’s confirmation email, as proof that the client agrees with this plan.
 
 ![client_scope_confirmation](imgs/client_scope_confirmation.png)
 
