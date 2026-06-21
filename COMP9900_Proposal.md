@@ -109,21 +109,21 @@ The prototype will support input lesson context. We are going to deliver a web-b
 
 The following items are outside the scope of this project:
 
-- **Live system integration:** The prototype won’t integrate with live UNSW, school, Department of Education, or learning management systems. It will be designed as a proof of concept using uploaded CSV or spreadsheet data.
+- **Live system integration:** The prototype won’t integrate with live UNSW, school, Department of Education, or learning management systems. We will design it as a proof of concept. It will use uploaded CSV files or spreadsheet data.
 
-- **Identifiable student data:** The system will only use synthetic or de-identified student learning data. It won’t ask for identifiable student information.
+- **Identifiable student data:** The system will only use made-up student learning data or data without students’ personal identity. It will not ask for any information that can identify a specific student.
 
-- **Automated lesson plan generation without teacher review:** The system won’t generate a final lesson plan without teacher decision points. Teachers have to review, accept, reject, modify, or add notes to AI-generated recommendations before using them in the lesson plan.
+- **Automated lesson plan generation without teacher review:** The system won’t generate a final lesson plan without teachers’ approval. Teachers have to check, accept, refuse, change or add notes to the AI-generated suggestions before using them in the lesson plan.
 
-- **Replacing teacher judgement:** The system won’t make final pedagogical decisions for the teacher. The teacher is still responsible for understanding the data, evaluating AI suggestions, and creating the final lesson plan.
+- **Replacing teacher judgement:** The system won’t make final teaching decisions for teachers. Teachers are still responsible for understanding the data, checking AI suggestions, and making the final lesson plan.
 
 #### Client Approval Evidence
 
-The project scope has been confirmed with the client, Sara Mashayekh, through email. After the first discussion with the client, the Product Owner sent an email to confirm the proposed scope, Demo 1 expectations, major features, and items that are out of scope.
+We have confirmed the project scope with the client Sara Mashayekh by email. After our first talk with her, the Product Owner sent an email to make several things clear: the scope we put forward, what Demo 1 is expected to show, main functions, and the work that is not included in this project.
 
-The client replied that the proposed scope aligns well with her expectations. She also confirmed that the project should focus on student data analysis, AI-supported recommendations, teacher review and control, editable lesson plan construction, and export functionality.
+The client wrote back and said the proposed scope fits her expectations very well. She also confirmed that this project should mainly focus on these parts: student data analysis, AI-supported suggestions, teachers’ review and control, making editable lesson plans, and the export function.
 
-So, our first demo will be a complete but simple functional prototype. It has these functions: input lesson background information, upload and map student data, do basic learning data analysis, get AI suggestions with clear reasons, let teachers check and make decisions, make lesson plans, and export files. The client said Demo 1 needs to show the whole work process from start to end.
+The client said Demo 1 needs to show the whole work process from start to end. So our first demo will be a complete but simple functional prototype. It has these functions: input lesson background information, upload and map student data, do basic learning data analysis, get AI suggestions with clear reasons, let teachers check and make decisions, make lesson plans, and export files.
 
 Below is the screenshot of the client’s confirmation email, as proof that the client agrees with this plan.
 
