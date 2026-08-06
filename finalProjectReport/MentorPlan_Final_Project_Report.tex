@@ -1,0 +1,746 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+
+% Keep the source compilable with pdfLaTeX as well as XeLaTeX/LuaLaTeX.
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else
+  \usepackage{fontspec}
+\fi
+
+\usepackage{graphicx}
+
+\usepackage{array}
+
+\usepackage{longtable}
+
+\usepackage{enumitem}
+
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{xurl}
+
+\setlist{nosep}
+
+\setlength{\parindent}{0pt}
+
+\setlength{\parskip}{0.65em}
+
+\emergencystretch=3em
+
+\begin{document}
+
+\begin{center}{\small \textbf{UNSW COMP9900  |  INFORMATION TECHNOLOGY PROJECT}}\end{center}
+
+\begin{center}{\LARGE\bfseries \textbf{Final Project Report}}\end{center}
+
+\begin{center}{\large\bfseries \textbf{MentorPlan: AI-Mediated Teacher Decision Support for Data-Informed Lesson Planning}}\end{center}
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.187\linewidth}|>{\raggedright\arraybackslash}p{0.733\linewidth}|}
+
+\hline
+
+\textbf{Project field} & \textbf{Value} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Project field} & \textbf{Value} \\ \hline
+
+\endhead
+
+\textbf{Project number} & Project 25 \\ \hline
+
+\textbf{Team} & F15C-BREAD \\ \hline
+
+\textbf{Client} & Sara Mashayekh (sara.mashayekh@unsw.edu.au) \\ \hline
+
+\textbf{Submission} & 9 August 2026 \\ \hline
+
+\textbf{Document status} & Final project report \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.187\linewidth}|>{\raggedright\arraybackslash}p{0.339\linewidth}|>{\raggedright\arraybackslash}p{0.157\linewidth}|>{\raggedright\arraybackslash}p{0.237\linewidth}|}
+
+\hline
+
+\textbf{Name} & \textbf{Email} & \textbf{Student ID} & \textbf{Official role} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Name} & \textbf{Email} & \textbf{Student ID} & \textbf{Official role} \\ \hline
+
+\endhead
+
+Yulong Jiang & z5485481@ad.unsw.edu.au & z5485481 & Scrum Master \\ \hline
+
+Qianyi Zhang & z5623911@ad.unsw.edu.au & z5623911 & Product Owner \\ \hline
+
+Xingqian She & z5561648@ad.unsw.edu.au & z5561648 & Developer \\ \hline
+
+Huaijin Chen & z5559709@ad.unsw.edu.au & z5559709 & Developer \\ \hline
+
+Yi Zhu & z5529745@ad.unsw.edu.au & z5529745 & Developer \\ \hline
+
+Yihong Yao & z5593964@ad.unsw.edu.au & z5593964 & Developer \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\tableofcontents
+
+\clearpage
+
+\section*{0. Project Overview}
+
+\addcontentsline{toc}{section}{0. Project Overview}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Frontend and Report Integration\textbf{ | Supporting: }Member 5 validates pedagogy; Product Owner validates client wording}\par
+
+MentorPlan is a web-based teacher decision-support system developed for client Sara Mashayekh. Its primary users are pre-service and early-career teachers who need help translating assessment evidence into lesson-planning decisions. The system does not attempt to replace teacher judgement. Instead, it makes the link between data evidence, pedagogical reasoning, teacher decisions and the final lesson plan visible.\par
+
+This goal also aligns with the Australian Professional Standards for Teachers, which require teachers to interpret assessment data and use it to evaluate and improve teaching programs (Australian Institute for Teaching and School Leadership [AITSL], 2011).\par
+
+The design responds to a practical gap: learning analytics dashboards commonly describe past performance, while general generative-AI tools can produce lesson plans without making their reasoning or evidence trail sufficiently visible. MentorPlan combines structured lesson context, de-identified assessment analytics, recommendation cards, explicit teacher decisions, editable lesson plans and supervision feedback within one workflow (Mandinach \& Gummer, 2016; UNESCO, 2023).\par
+
+\subsection*{0.1 Target User Story}
+
+\addcontentsline{toc}{subsection}{0.1 Target User Story}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Frontend and Report Integration\textbf{ | Supporting: }Members 3, 5 and 6 validate system responses}\par
+
+Ms Lee, an early-career Year 7 Science teacher, signs in and chooses the level of AI mentoring she prefers. She records an Ecosystems lesson context, uploads a de-identified assessment spreadsheet, and reviews class-level patterns. MentorPlan generates four recommendation cards for teaching activity, grouping, differentiation and formative assessment. Ms Lee accepts, skips or modifies each card, records her reflection, and generates a plan only from approved or teacher-modified decisions. She edits the draft, saves a new version, exports it, and receives feedback from an assigned experienced teacher.\par
+
+\subsection*{0.2 Final Scope}
+
+\addcontentsline{toc}{subsection}{0.2 Final Scope}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend and Architecture\textbf{ | Supporting: }Members 1, 2, 3, 5 and 6 confirm their feature boundaries}\par
+
+In scope: user authentication, role-based access, teacher support profile, lesson context, CSV/XLSX/XLS upload and preview, column mapping, learning analytics, recommendation cards, teacher decisions, lesson-plan generation, editing, version history, DOCX/PDF export, and supervisor feedback.\par
+
+Privacy boundary: raw student rows, names, aliases, student identifiers and local storage paths are blocked from external-AI payloads; raw previews remain owner-only.\par
+
+Out of scope: live school/LMS integration, formal model fine-tuning, unrestricted processing of identifiable student data, and autonomous lesson-plan approval without teacher review.\par
+
+The report is based on repository commit 91d42ce, which integrates the final frontend, backend, AI, data-processing and student-pseudonymisation work available on main on 5 August 2026.\par
+
+\section*{1. Installation Manual}
+
+\addcontentsline{toc}{section}{1. Installation Manual}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend, Security and DevOps\textbf{ | Supporting: }Member 1 verifies the browser URL; Member 6 verifies AI settings}\par
+
+The development stack is Dockerised and includes PostgreSQL, pgAdmin, a FastAPI backend and a React/Vite frontend. The assessor does not need to install Python, Node.js or PostgreSQL directly.\par
+
+\subsection*{1.1 Prerequisites and Configuration}
+
+\addcontentsline{toc}{subsection}{1.1 Prerequisites and Configuration}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend, Security and DevOps\textbf{ | Supporting: }Member 6 confirms provider variables}\par
+
+1.  Install and start Docker Desktop with Docker Compose support.\par
+
+2.  Open PowerShell in the repository root containing docker-compose.yml.\par
+
+3.  Copy .env.example to .env. Do not commit .env or any real API key.\par
+
+4.  Set JWT\_SECRET\_KEY to a random value of at least 32 characters and set the bootstrap administrator email, password and display name.\par
+
+5.  For a no-cost local demonstration, keep REQUIRE\_EXTERNAL\_AI=false; the backend will use deterministic rule-based fallbacks. For external generation, configure the relevant provider key without adding it to Git.\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.241\linewidth}|>{\raggedright\arraybackslash}p{0.241\linewidth}|>{\raggedright\arraybackslash}p{0.438\linewidth}|}
+
+\hline
+
+\textbf{Variable} & \textbf{Requirement} & \textbf{Purpose} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Variable} & \textbf{Requirement} & \textbf{Purpose} \\ \hline
+
+\endhead
+
+JWT\_\allowbreak{}SECRET\_\allowbreak{}KEY & Required; at least 32 characters & Signs HS256 access tokens. \\ \hline
+
+ACCESS\_\allowbreak{}TOKEN\_\allowbreak{}EXPIRE\_\allowbreak{}MINUTES & Optional; default 60 & Controls access-token lifetime. \\ \hline
+
+BOOTSTRAP\_\allowbreak{}ADMIN\_\allowbreak{}EMAIL & Recommended & Creates the first administrator if absent. \\ \hline
+
+BOOTSTRAP\_\allowbreak{}ADMIN\_\allowbreak{}PASSWORD & Recommended; strong secret & Password for the bootstrap administrator. \\ \hline
+
+CORS\_\allowbreak{}ALLOWED\_\allowbreak{}ORIGINS & Optional for local stack & Allowed browser origins. \\ \hline
+
+REQUIRE\_\allowbreak{}EXTERNAL\_\allowbreak{}AI & false for local fallback & Fails startup in production when AI configuration is required but missing. \\ \hline
+
+AI\_\allowbreak{}PROVIDER /\allowbreak{} AI\_\allowbreak{}API\_\allowbreak{}KEY & OpenAI recommendation path & External recommendation-card generation; current adapter supports OpenAI-compatible use. \\ \hline
+
+OPENAI/\allowbreak{}GEMINI/\allowbreak{}ANTHROPIC/\allowbreak{}QWEN keys & Optional & Lesson-plan provider pool; configured providers are tried in order. \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\subsection*{1.2 Start and Verify}
+
+\addcontentsline{toc}{subsection}{1.2 Start and Verify}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend, Security and DevOps\textbf{ | Supporting: }Member 1 confirms the complete UI loads}\par
+
+1.  Run: docker compose up --build\par
+
+2.  Wait until the backend and database are healthy and the frontend build is serving requests.\par
+
+3.  Open \url{http://localhost:3000} for the application.\par
+
+4.  Open \url{http://localhost:8000/docs} for interactive API documentation and \url{http://localhost:5050} for pgAdmin if database inspection is required.\par
+
+5.  Check \url{http://localhost:8000/api/v1/health} and /api/v1/health/database before testing the workflow.\par
+
+6.  Stop the stack with docker compose down. Do not add the -v flag unless intentionally deleting persisted database and export volumes.\par
+
+Verification note: frontend production compilation, backend compilation and focused data-processing checks passed on 5 August 2026. A fresh Docker end-to-end run could not be repeated during report assembly because Docker Desktop was not running; this limitation is disclosed in Section 4.3.\par
+
+\subsection*{1.3 Production Deployment Option}
+
+\addcontentsline{toc}{subsection}{1.3 Production Deployment Option}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend, Security and DevOps\textbf{ | Supporting: }Product Owner confirms client handover domain}\par
+
+The repository also contains docker-compose.prod.yml, a production frontend image and a Caddy gateway. On a Linux host with a public domain, the stack can terminate HTTPS, proxy /api/v1 to FastAPI, serve the built frontend and persist PostgreSQL, upload, export and certificate data in named volumes. This is deployment capability, not proof that a stable public environment has already been handed over.\par
+
+\section*{2. System Architecture Diagram}
+
+\addcontentsline{toc}{section}{2. System Architecture Diagram}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend and Architecture\textbf{ | Supporting: }Members 1-3 and 5-6 validate component names and arrows}\par
+
+The final system is a role-aware web application with a React presentation layer, a versioned FastAPI REST API, service and repository boundaries, PostgreSQL persistence, local or Docker-volume file storage, and optional external-AI providers. The architecture diagram labels data flows rather than listing technologies alone.\par
+
+\begin{figure}[htbp]
+
+\centering
+
+\includegraphics[width=0.9\linewidth]{\detokenize{MentorPlan_Final_Project_Report_images/image1.png}}
+
+\end{figure}
+
+Figure 1. Final MentorPlan architecture. External models receive sanitised lesson context, aggregate analytics and approved decision inputs, not raw student rows.\par
+
+\subsection*{2.1 Presentation and Access Layer}
+
+\addcontentsline{toc}{subsection}{2.1 Presentation and Access Layer}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Frontend and Integration\textbf{ | Supporting: }Member 4 validates role rules}\par
+
+The React/Vite single-page application presents separate navigation based on the authenticated role. Teachers access Dashboard, Lessons, Students, AI Planner and Account. Experienced teachers gain Supervisor access only when an active supervision assignment exists. Researchers receive read-only supervisor audit access, while administrators manage users, supervision assignments and audit views.\par
+
+\subsection*{2.2 API, Services and Persistence}
+
+\addcontentsline{toc}{subsection}{2.2 API, Services and Persistence}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend and Architecture\textbf{ | Supporting: }Members 2, 3, 5 and 6 confirm service boundaries}\par
+
+FastAPI exposes /api/v1 routes for authentication, users, support profiles, lesson contexts, datasets, mappings, analytics, recommendations, decisions, lesson plans, exports and supervision. Pydantic schemas validate requests and responses. Dependencies enforce bearer-token authentication, role checks and teacher ownership before route functions delegate business rules to services. Repositories centralise psycopg SQL and store structured or evolving payloads in PostgreSQL JSONB columns.\par
+
+Uploaded files and generated exports are stored outside relational rows and referenced by storage URIs. This keeps large binary files out of PostgreSQL while retaining ownership and audit metadata. In production, named Docker volumes persist uploads, exports and database state.\par
+
+\subsection*{2.3 End-to-End Data Flow}
+
+\addcontentsline{toc}{subsection}{2.3 End-to-End Data Flow}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend and Architecture\textbf{ | Supporting: }All technical members validate their stage}\par
+
+\begin{figure}[htbp]
+
+\centering
+
+\includegraphics[width=0.9\linewidth]{\detokenize{MentorPlan_Final_Project_Report_images/image2.png}}
+
+\end{figure}
+
+Figure 2. Teacher-centred workflow and controlled data flow from support profile to supervision feedback.\par
+
+1.  A user registers or signs in. Passwords are Argon2-hashed and FastAPI returns a time-limited JWT.\par
+
+2.  The teacher saves a support profile and lesson context. The profile changes explanation and reflection scaffolding, not the educational recommendation itself.\par
+
+3.  The teacher uploads CSV/XLSX/XLS data. The backend stores the file, profiles tables and exposes owner-only previews.\par
+
+4.  Column mappings and analytics produce class, question and concept summaries plus possible support and extension patterns.\par
+
+5.  The privacy filter removes direct identifiers and raw rows before any external-AI call. Recommendation generation produces four typed cards with evidence, reasoning and alignment fields.\par
+
+6.  Teacher decisions are persisted. Skipped cards are excluded; modified cards replace their original content in the effective approved set.\par
+
+7.  Lesson-plan generation combines lesson context, analytics and approved or modified recommendations. Each teacher edit creates a new version.\par
+
+8.  DOCX/PDF exporters render a chosen version. Assigned experienced teachers review de-identified workflows and publish version-bound feedback.\par
+
+\section*{3. Design Justifications}
+
+\addcontentsline{toc}{section}{3. Design Justifications}
+
+\noindent\textit{\textbf{Responsible member: }Member 5 - AI Recommendations (section lead)\textbf{ | Supporting: }Members 2-4 and 6 own their technical subsections}\par
+
+The strongest justification is not a list of chosen technologies; it is the sequence from an initial design, through client or engineering feedback, to a changed implementation and a reason that the final design is more effective. The table below summarises that evolution.\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.147\linewidth}|>{\raggedright\arraybackslash}p{0.383\linewidth}|>{\raggedright\arraybackslash}p{0.389\linewidth}|}
+
+\hline
+
+\textbf{Stage} & \textbf{Design at that stage} & \textbf{Why it changed} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Stage} & \textbf{Design at that stage} & \textbf{Why it changed} \\ \hline
+
+\endhead
+
+Initial proposal & Broad end-to-end mentor with lesson context, upload, analytics, recommendations, decisions and export; some architecture material anticipated K-means and a generic multi-provider gateway. & The proposal expressed the desired scope but several components were not connected or implemented. \\ \hline
+
+Demo A & A basic upload/\allowbreak{}analytics path and one recommendation card could feed lesson-plan generation. & Teacher control was weak: no multi-card comparison and no explicit accepted/\allowbreak{}skipped/\allowbreak{}modified decision set. \\ \hline
+
+Demo B & Added support profile, four card types, accept/\allowbreak{}skip/\allowbreak{}modify/\allowbreak{}annotate actions, reflection prompts, approved-card plan generation, editing, version history and export. & The workflow became human-in-the-loop and traceable rather than direct AI-to-plan generation. \\ \hline
+
+Final client iteration & Client requested generated output for inspection, a supervising experienced-teacher view, feedback capability and a live link. & Added authentication/\allowbreak{}RBAC, admin supervision assignment, de-identified supervisor workflow, version-bound feedback and a production Docker/\allowbreak{}Caddy stack. \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+The final iteration directly addressed the client meeting of 28 July 2026: the client asked to inspect generated output, requested an experienced-teacher view that could see how and why a novice teacher planned, and asked for feedback and an independently testable link. Authentication, supervision assignment, workflow drill-down, feedback and production deployment files were added in response.\par
+
+\subsection*{3.1 Adaptive Support Without Changing Pedagogy}
+
+\addcontentsline{toc}{subsection}{3.1 Adaptive Support Without Changing Pedagogy}
+
+\noindent\textit{\textbf{Responsible member: }Member 5 - AI Recommendations\textbf{ | Supporting: }Member 1 supplies support-profile UI evidence}\par
+
+The initial workflow treated every teacher identically. Client requirements later introduced three profile questions: teaching experience, planning confidence and preferred AI support level. The final implementation snapshots these values into the lesson context and uses them to adjust mentoring detail, reflection scaffolding and explanatory language. It explicitly records an adaptation boundary: profile answers do not change the educational recommendation. This avoids giving different pedagogical advice merely because one teacher reports lower confidence, while still supporting cognitive apprenticeship through coaching and reflection (Collins et al., 1986).\par
+
+\subsection*{3.2 From One Card to Four Decision Objects}
+
+\addcontentsline{toc}{subsection}{3.2 From One Card to Four Decision Objects}
+
+\noindent\textit{\textbf{Responsible member: }Member 5 - AI Recommendations\textbf{ | Supporting: }Member 6 validates approved-set behaviour}\par
+
+Demo A passed one recommendation directly into plan generation. The final design creates a generation batch containing teaching\_activity, grouping, differentiation and formative\_assessment cards. Each card carries evidence, reasoning, a recommended action, lesson/data/assessment alignment and an adaptive reflection prompt. Teachers can accept, skip, modify or annotate cards. The effective decision state is reconstructed from persisted decision records, and plan generation receives only approved or teacher-modified cards. This change increases teacher agency and makes the provenance of final plan content auditable.\par
+
+\subsection*{3.3 Deterministic Analytics Instead of Opaque Clustering}
+
+\addcontentsline{toc}{subsection}{3.3 Deterministic Analytics Instead of Opaque Clustering}
+
+\noindent\textit{\textbf{Responsible member: }Member 3 - Learning Analytics\textbf{ | Supporting: }Member 2 validates cleaned input assumptions}\par
+
+The proposal considered K-means for grouping. The implemented analytics instead uses transparent thresholds: below 0.50 for intensive support, 0.50 to below 0.70 for targeted support, 0.70 to below 0.85 for core practice, and at least 0.85 for extension. Similar-needs groups use balanced chunks; mixed-readiness groups use a deterministic snake allocation. Every output is labelled as a suggestion requiring teacher review. This was a deliberate trade-off: deterministic rules are easier to explain, test and audit with a small prototype dataset than an unsupervised cluster whose meaning can shift between runs.\par
+
+\subsection*{3.4 Data Cleaning and Learning Analytics Pipeline}
+
+\addcontentsline{toc}{subsection}{3.4 Data Cleaning and Learning Analytics Pipeline}
+
+\noindent\textit{\textbf{Responsible member: }Member 2 - Data Ingestion\textbf{ | Supporting: }Member 3 owns analytics calculations}\par
+
+Structured uploads are profiled as wide student data, long student data, question metadata, summary-level data or unknown. The pipeline normalises headers, removes fully empty rows and columns, validates mappings, converts scores into a canonical long format, excludes invalid responses with reason counts, resolves duplicate or conflicting records, and joins question metadata before calculating analytics. It does not infer a non-binary question's maximum score from the highest observed class score, because doing so would systematically inflate achievement when no student achieved full marks.\par
+
+Structural errors stop analysis with a clear error, while row-level defects are excluded and counted so valid evidence can still be used.\par
+
+Outputs include class, question and concept summaries, score variation, low/high areas, support groups, grouping suggestions and cautious teacher-facing notes.\par
+
+Before analytics calculations, student identifiers are deterministically replaced with STU-xxx pseudonyms and aliases are cleared. Teacher-facing references are restored only after analytics; external-AI payloads remove both original and pseudonymous student references.\par
+
+\subsection*{3.5 Privacy Filter and Role-Based Access}
+
+\addcontentsline{toc}{subsection}{3.5 Privacy Filter and Role-Based Access}
+
+\noindent\textit{\textbf{Responsible member: }Member 4 - Backend and Security\textbf{ | Supporting: }Member 5 validates AI payload filtering}\par
+
+Privacy is enforced at two layers. First, JWT authentication, ownership checks and role rules prevent one teacher from reading another teacher's raw uploads. Second, sanitize\_for\_external\_ai recursively removes keys such as student\_id, student\_ref, alias, raw\_rows and storage\_uri, and redacts email, phone and serialised student identifiers inside strings. The filter returns a non-sensitive report recording removed paths and confirms that raw student data was not sent. This is stronger than relying on the frontend not to display sensitive fields, because the control sits at the backend boundary immediately before external model calls.\par
+
+\subsection*{3.6 Controlled Lesson-Plan Generation}
+
+\addcontentsline{toc}{subsection}{3.6 Controlled Lesson-Plan Generation}
+
+\noindent\textit{\textbf{Responsible member: }Member 6 - AI Lesson Plan\textbf{ | Supporting: }Member 5 validates source recommendation data}\par
+
+The final adapter aggregates distinct approved cards into one stable plan-generation input. It preserves source-card types, implementation steps, differentiation supports, assessment suggestions and teacher decision context. The plan schema is normalised against a rule-based fallback and validated before persistence. Lesson-plan generation can try configured providers in the order OpenAI, Gemini, Claude and Qwen; if no provider is configured and external AI is not required, the local fallback still produces a structurally valid demonstration plan. The recommendation-card adapter itself supports OpenAI-compatible external generation plus a rule-based fallback. Teacher edits never overwrite an earlier version: each save creates a new lesson\_plan\_versions row and exports target a specific version.\par
+
+\section*{4. User-Driven Evaluation of the Solution}
+
+\addcontentsline{toc}{section}{4. User-Driven Evaluation of the Solution}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - User Journey and Evaluation Integration\textbf{ | Supporting: }Members 2-6 provide criterion-specific evidence}\par
+
+Evaluation is organised around whether target users can make a defensible planning decision, not merely whether individual endpoints return 200 responses. The principal scenario uses the client-provided Year 7 Science assessment package and compares expected data patterns, teacher decisions and plan output across one coherent workflow.\par
+
+\begin{figure}[htbp]
+
+\centering
+
+\includegraphics[width=0.9\linewidth]{\detokenize{MentorPlan_Final_Project_Report_images/image3.png}}
+
+\end{figure}
+
+Figure 3. Teacher-facing evidence from the final implementation: adaptive profile, analytics, recommendation decisions and editable lesson plan.\par
+
+\subsection*{4.1 Main Implemented Features}
+
+\addcontentsline{toc}{subsection}{4.1 Main Implemented Features}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Frontend and Integration\textbf{ | Supporting: }Technical owner listed in each row}\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.246\linewidth}|>{\raggedright\arraybackslash}p{0.674\linewidth}|}
+
+\hline
+
+\textbf{Feature} & \textbf{User-visible outcome} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Feature} & \textbf{User-visible outcome} \\ \hline
+
+\endhead
+
+Authentication and roles & Register/\allowbreak{}login, teacher ownership, admin user management, researcher/\allowbreak{}admin audit access \\ \hline
+
+Adaptive support profile & Experience, confidence and preferred support adjust explanation/\allowbreak{}reflection support \\ \hline
+
+Lesson context & Year, subject, topic, outcomes, goals, needs, constraints and teacher interpretation \\ \hline
+
+Student data & CSV/\allowbreak{}XLSX/\allowbreak{}XLS upload, profile, preview, stored mappings and analytics trigger \\ \hline
+
+Learning analytics & Class/\allowbreak{}question/\allowbreak{}concept summaries, evidence, support levels and grouping suggestions \\ \hline
+
+Recommendation cards & Four typed cards with visible evidence, reasoning, alignment and reflection prompts \\ \hline
+
+Teacher decisions & Accept, skip, modify and annotate; effective approved state is persisted \\ \hline
+
+Lesson plan & Generate from approved/\allowbreak{}modified cards, edit, save versions and export DOCX/\allowbreak{}PDF \\ \hline
+
+Supervision & Admin assignment, de-identified workflow review and version-bound experienced-teacher feedback \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\begin{figure}[htbp]
+
+\centering
+
+\includegraphics[width=0.9\linewidth]{\detokenize{MentorPlan_Final_Project_Report_images/image4.png}}
+
+\end{figure}
+
+Figure 4. Administration and supervision evidence: an administrator assigns an experienced teacher, who can inspect a de-identified workflow and publish version-bound feedback.\par
+
+\subsection*{4.2 Evaluation Criteria and Method}
+
+\addcontentsline{toc}{subsection}{4.2 Evaluation Criteria and Method}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Evaluation Integration\textbf{ | Supporting: }Members 2-6 own their criterion}\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.172\linewidth}|>{\raggedright\arraybackslash}p{0.423\linewidth}|>{\raggedright\arraybackslash}p{0.325\linewidth}|}
+
+\hline
+
+\textbf{Criterion} & \textbf{Success definition} & \textbf{Measure} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Criterion} & \textbf{Success definition} & \textbf{Measure} \\ \hline
+
+\endhead
+
+E1 Task completion & A new teacher completes sign-in to export without developer intervention. & Completion rate, failed steps, elapsed time \\ \hline
+
+E2 Data correctness & Reported class/\allowbreak{}question/\allowbreak{}concept values match expected values. & Absolute error, recognised rows, exclusion reasons \\ \hline
+
+E3 Explainability and agency & A teacher can identify evidence/\allowbreak{}reasoning and control which advice reaches the plan. & Card completeness, decision persistence, approved-set trace \\ \hline
+
+E4 Privacy and access control & Raw/\allowbreak{}identifiable data is not sent externally or exposed across users. & Blocked fields, ownership tests, role tests \\ \hline
+
+E5 Plan usefulness & The exported plan is concise, aligned, editable and usable for the stated lesson. & Client rubric, template coverage, revision count \\ \hline
+
+E6 Operability and handover & A fresh host can run the system and the client can access a stable link and documentation. & Fresh-install success, uptime check, handover confirmation \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\subsection*{4.3 Current Evidence and Fair Assessment}
+
+\addcontentsline{toc}{subsection}{4.3 Current Evidence and Fair Assessment}
+
+\noindent\textit{\textbf{Responsible member: }Member 3 - Evidence Quality\textbf{ | Supporting: }Members 1, 2, 4, 5 and 6 update their row}\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.098\linewidth}|>{\raggedright\arraybackslash}p{0.157\linewidth}|>{\raggedright\arraybackslash}p{0.389\linewidth}|>{\raggedright\arraybackslash}p{0.275\linewidth}|}
+
+\hline
+
+\textbf{Criterion} & \textbf{Current status} & \textbf{Evidence-based finding} & \textbf{Required before submission} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Criterion} & \textbf{Current status} & \textbf{Evidence-based finding} & \textbf{Required before submission} \\ \hline
+
+\endhead
+
+E1 & Partially verified & The final demonstration recording shows the teacher workflow through plan generation and export. Backend compile and frontend production build passed. The supplied workflow test covers the remaining APIs but inserts aggregate analytics rather than exercising the upload route. & A clean-host timed usability run remains future evaluation work. \\ \hline
+
+E2 & Focused checks passed & Twelve self-contained data-processing checks passed, and the grouping/\allowbreak{}strength check passed against the client gold-standard workbook on 5 August 2026. The full script still expects a repository /\allowbreak{}data fixture that is not packaged in main. & Package the complete fixture set and automate the full suite in CI. \\ \hline
+
+E3 & Implemented with UI limitation & Decision state and effective modified content reload; approved cards are selected for generation. Saved reflection/\allowbreak{}annotation history is available through the API but is not repopulated into the editable input fields after refresh. & Hydrate the input fields from decision-state history. \\ \hline
+
+E4 & Implemented; runtime retest pending & JWT/\allowbreak{}RBAC, ownership dependencies, deterministic analytics pseudonymisation and recursive external-AI sanitisation are implemented. Integration scripts cover auth and supervision permissions, but Docker was unavailable during report assembly. & Run the integration scripts against the final production image before handover. \\ \hline
+
+E5 & Needs client evaluation & DOCX/\allowbreak{}PDF export and versioning exist, but the 28 July client explicitly requested the generated output for inspection against the supplied training/\allowbreak{}template material. & Send one final output, collect written feedback and evaluate against a fixed rubric. \\ \hline
+
+E6 & Deployment files exist; handover not proven & Production Compose, Caddy and deployment notes exist. A stable hosted client URL and final handover acknowledgement are not present in the supplied project evidence. & Deploy, run health checks, provide accounts/\allowbreak{}sample data and capture client acknowledgement. \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\subsection*{4.4 Verification Results and Residual Gaps}
+
+\addcontentsline{toc}{subsection}{4.4 Verification Results and Residual Gaps}
+
+\noindent\textit{\textbf{Responsible member: }Member 3 - Learning Analytics\textbf{ | Supporting: }Members 2 and 4 implement or verify the fix}\par
+
+A previously identified mapping integration gap has been resolved in the current main branch: the analytics route loads dataset mapping configuration and forwards it through run\_basic\_analytics into analyse\_assessment\_package. The latest data-processing merge also pseudonymises student identifiers before analytics calculations. Current static and focused verification results are summarised below; they do not substitute for a final clean-database Docker run.\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.241\linewidth}|>{\raggedright\arraybackslash}p{0.133\linewidth}|>{\raggedright\arraybackslash}p{0.546\linewidth}|}
+
+\hline
+
+\textbf{Verification} & \textbf{Result} & \textbf{Evidence} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Verification} & \textbf{Result} & \textbf{Evidence} \\ \hline
+
+\endhead
+
+Repository baseline & PASS & main at 91d42ce; worktree clean before report generation \\ \hline
+
+Backend syntax/\allowbreak{}import compilation & PASS & python -m compileall -q backend \\ \hline
+
+Frontend production build & PASS & Vite 6.3.5; 1,650 modules transformed \\ \hline
+
+Focused data processing & PASS & 12 self-contained checks plus grouping/\allowbreak{}strength check on client workbook \\ \hline
+
+Dependency audit & RISK & npm reported one moderate and two high vulnerabilities \\ \hline
+
+Docker/\allowbreak{}API end-to-end & NOT RE-RUN & Docker Desktop daemon was unavailable during report assembly \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\section*{5. Limitations and Future Work}
+
+\addcontentsline{toc}{section}{5. Limitations and Future Work}
+
+\noindent\textit{\textbf{Responsible member: }Member 6 - AI Lesson Plan and Handover\textbf{ | Supporting: }Members 2-5 own technical limitation rows; Product Owner owns client evidence}\par
+
+The prototype demonstrates a coherent teacher-controlled workflow, but it should not be represented as production-ready school infrastructure. The following limitations materially affect reliability, generalisability or handover readiness.\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.216\linewidth}|>{\raggedright\arraybackslash}p{0.270\linewidth}|>{\raggedright\arraybackslash}p{0.433\linewidth}|}
+
+\hline
+
+\textbf{Limitation} & \textbf{User impact} & \textbf{Future work and resources} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Limitation} & \textbf{User impact} & \textbf{Future work and resources} \\ \hline
+
+\endhead
+
+Evaluation uses synthetic and limited client examples & Correctness and usefulness may not generalise across subjects and schools. & Create a multi-subject benchmark and conduct 5-10 teacher task sessions; data preparation plus ethics/\allowbreak{}client coordination, 2-3 weeks. \\ \hline
+
+External-AI output remains variable & Provider availability, rate limits and model changes can alter plan quality. & Version prompts/\allowbreak{}models, add schema-retry telemetry and a regression set; one AI engineer, 1-2 weeks plus API budget. \\ \hline
+
+Privacy filtering remains rule-based & Unexpected identifiers embedded in free text may escape fixed patterns. & Add configurable DLP/\allowbreak{}entity detection, adversarial privacy tests and retention controls; backend/\allowbreak{}security effort, 2-4 weeks. \\ \hline
+
+Reflection fields do not hydrate after refresh & Teacher reasoning is persisted but the UI does not fully support revisiting it. & Hydrate fields from decision history and add refresh tests; frontend plus backend, 1-2 days. \\ \hline
+
+Canonical student responses are not persisted & Fine-grained longitudinal analysis and reproducible re-analysis are limited. & Persist validated canonical records with retention controls; backend plus data engineer, 1-2 weeks. \\ \hline
+
+Stable public operations are unproven & Client access depends on a maintained host, domain, backups and monitoring. & Provision a managed host, domain, backups, alerts and an operational owner; 2-3 days setup plus recurring cost. \\ \hline
+
+Frontend dependency audit reports vulnerabilities & Known package vulnerabilities may create avoidable operational risk. & Review npm audit output, update compatible packages and add automated dependency scanning; frontend engineer, 1-2 days. \\ \hline
+
+No LMS or school-system integration & Teachers manually upload files and duplicate context. & Define a privacy-reviewed LMS integration and SSO roadmap; multi-sprint work with institutional access. \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\subsection*{5.1 Client Handover}
+
+\addcontentsline{toc}{subsection}{5.1 Client Handover}
+
+\noindent\textit{\textbf{Responsible member: }Member 6 - Handover Coordinator\textbf{ | Supporting: }Member 4 supplies deployment/admin material; Product Owner sends the message}\par
+
+The repository contains environment examples, local and production Docker Compose files, API documentation, database schema notes, authentication notes and deployment instructions. During the 28 July meeting, the client requested the generated lesson-plan output and a live link that could be tested independently. A stable hosted environment and final acknowledgement were not present in the supplied evidence at report assembly time, so handover is reported as pending rather than falsely described as complete.\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.187\linewidth}|>{\raggedright\arraybackslash}p{0.511\linewidth}|>{\raggedright\arraybackslash}p{0.222\linewidth}|}
+
+\hline
+
+\textbf{Package item} & \textbf{Contents} & \textbf{Status} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Package item} & \textbf{Contents} & \textbf{Status} \\ \hline
+
+\endhead
+
+Source and release & main commit 91d42ce and repository documentation & Ready \\ \hline
+
+Runbook & Local/\allowbreak{}production installation, health checks, backup and shutdown & Ready in docs \\ \hline
+
+Access & Stable HTTPS URL and separate role-based test accounts & Pending hosted environment \\ \hline
+
+Test package & Client Year 7 Science workbook and focused expected-result checks & Available locally \\ \hline
+
+User guide & Teacher workflow, decision meanings, supervision assignment and feedback & Partly covered by report and API docs \\ \hline
+
+Known limitations & Evaluation, reflection reload, external-AI variability, operations and retention & Disclosed in Section 5 \\ \hline
+
+Communication evidence & Final handover message and client acknowledgement & Pending external communication \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+Planned final communication will include the hosted URL, role-based test accounts shared through a separate secure channel, sample workflow and data, generated output, installation/deployment documentation, known limitations and a support contact. The Product Owner will send the message and provide the tutor with the acknowledgement screenshot after completion, as permitted by the assessment specification for a pending handover.\par
+
+\section*{References}
+
+\addcontentsline{toc}{section}{References}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Report Integration\textbf{ | Supporting: }Every member supplies complete source metadata for their claims}\par
+
+Australian Institute for Teaching and School Leadership. (2011). Australian professional standards for teachers. AITSL.\par
+
+Collins, A., Brown, J. S., \& Newman, S. E. (1986). Cognitive apprenticeship: Teaching the craft of reading, writing, and mathematics (Technical Report No. 403). Center for the Study of Reading, University of Illinois at Urbana-Champaign.\par
+
+Mandinach, E. B., \& Gummer, E. S. (2016). What does it mean for teachers to be data literate: Laying out the skills, knowledge, and dispositions. Teaching and Teacher Education, 60, 366-376. \url{https://doi.org/10.1016/j.tate.2016.07.011}\par
+
+UNESCO. (2023). Guidance for generative AI in education and research. \url{https://doi.org/10.54675/EWZM9535}\par
+
+\section*{Appendix A. Verification and Evidence Index}
+
+\addcontentsline{toc}{section}{Appendix A. Verification and Evidence Index}
+
+\noindent\textit{\textbf{Responsible member: }Member 1 - Report Integration\textbf{ | Supporting: }All members sign off}\par
+
+\begin{small}
+
+\setlength{\tabcolsep}{3pt}
+
+\begin{longtable}{|>{\raggedright\arraybackslash}p{0.246\linewidth}|>{\raggedright\arraybackslash}p{0.674\linewidth}|}
+
+\hline
+
+\textbf{Evidence area} & \textbf{Primary code/\allowbreak{}document paths} \\ \hline
+
+\endfirsthead
+
+\hline
+
+\textbf{Evidence area} & \textbf{Primary code/\allowbreak{}document paths} \\ \hline
+
+\endhead
+
+Docker and deployment & docker-compose.yml; docker-compose.prod.yml; docs/\allowbreak{}production-deployment.md \\ \hline
+
+Authentication/\allowbreak{}RBAC & backend/\allowbreak{}app/\allowbreak{}api/\allowbreak{}routes/\allowbreak{}auth.py; dependencies/\allowbreak{}auth.py; docs/\allowbreak{}user-auth.md \\ \hline
+
+Data pipeline & backend/\allowbreak{}app/\allowbreak{}data\_\allowbreak{}processing/\allowbreak{}*; scripts/\allowbreak{}test\_\allowbreak{}data\_\allowbreak{}processing.py \\ \hline
+
+Mapping integration & routes/\allowbreak{}analytics.py; column\_\allowbreak{}mappings\_\allowbreak{}repository.py; services/\allowbreak{}analytics\_\allowbreak{}adapter.py \\ \hline
+
+Student pseudonymisation & data\_\allowbreak{}processing/\allowbreak{}student\_\allowbreak{}identity.py; pipeline.py; privacy\_\allowbreak{}filter.py \\ \hline
+
+Recommendations and decisions & recommendation\_\allowbreak{}adapter.py; recommendations.py; teacher\_\allowbreak{}decisions.py \\ \hline
+
+Plans and exports & lesson\_\allowbreak{}plan\_\allowbreak{}adapter.py; lesson\_\allowbreak{}plan\_\allowbreak{}exporter.py; lesson\_\allowbreak{}plans.py; exports.py \\ \hline
+
+Supervisor workflow & admin\_\allowbreak{}supervisions.py; supervisor.py; supervisor\_\allowbreak{}service.py; frontend supervisor components \\ \hline
+
+Integrated workflow & backend/\allowbreak{}scripts/\allowbreak{}test\_\allowbreak{}completed\_\allowbreak{}workflow\_\allowbreak{}api.py; note synthetic analytics fixture \\ \hline
+
+\end{longtable}
+
+\end{small}
+
+\end{document}
