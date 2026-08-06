@@ -1,0 +1,47 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[a4paper,top=15mm,bottom=15mm,left=18mm,right=18mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.28em}
+\emergencystretch=3em
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries MentorPlan Final Project Report\par}
+\vspace{0.1em}
+{\small Team F15C-BREAD\par}
+\end{center}
+\vspace{0.1em}
+
+\section{Data Cleaning and Learning Analytics Pipeline}
+
+Since different teacher may upload different assessment data. For example, Some files use one column for each question and other files put every answer in a new row. Column names may also be different. So, the raw data cannot be directly used by learning analytics engine. In order to solve this, we create the data processing part which is between the uploaded file and other functions. The data processing part is not only for data cleaning but also making the later result has same meaning by standardizes input lines into a uniform long format.
+
+\subsection{Data Input and Processing}
+
+The current workflow of the data processing part supports CSV, XLSX, and XLS files. Excel documents may contain several non-empty sheets. Each sheet is processed individually. CSV files may have some problems like delimiter or text encoding. We check the problems when reading, empty rows and columns will be removed, and if blank or duplicate headers are detected, a stable column name will be assigned and log a warning.
+
+There are two common data forms: wide data(where each row represents a student and columns represent question scores) and long data(where each row represents a single answer). Input data mainly arrives in one of two forms. Files only contain summary are also acceptable.
+
+In order to handle various files with different column names across different schools and platforms, this component tries to check the column names against a predefined set. However, this check may fail. In this case, teachers can save a column mapping. The system uses this mapping first. Mapping the rigth column is important because if the mapping is wrong, the score meaning can be wrong too.
+
+After mapping, every valid answer is transformed into one common form denoted as a canonical response. This structure stores the student, assessment, question, score and maximum score. It may also store the concept. By using the structure, the learning analytics engine only needs to handle with one data form, which means wide and long data can be processed by the same analytical pipeline. If an uploaded dataset contain both a wide and a long table, in this case, we use the long table.
+
+Each score needs a maximum score. For boolean (0/1) questions, the maximum score can be 1. For other wide format questions, this value is from the file or the mapping. We do not use the highest student score, since there is no student get the full score in the class. If we can not find the value, the system stops.
+
+There is another problem. If the table structure is entirely unrecognizable, or if a selected table/mapping is missing, the system terminates the analysis. However, one bad row is different. Rows with no student ID or a wrong score will be removed. Duplicate records with different scores will be deleted. The system will also save the number of deleted records and the reason for deletion. Then, other rows can still be used. 
+
+\subsection{Analytics and Student Privacy in Analytics Pipeline}
+
+The canonical responses will be used by the system to aggregates performance metrics at the class, question, and concept levels. This allows the system to highlight areas of strength and weakness, and dynamically construct student groupings.
+
+In the case that we only have summary data, we can still make some class level or question level insights by using the summary data. However, we cannot make student groups because there is no student level data. If there is no question explanations, the result may have less information.
+
+Before analytics, the system changes the student IDs to \texttt{STU-xxx}. The learning analytics engine uses these new IDs. After get the result, the original ID can be put back.
+
+\textbf{Some limits.} We have code some functions to read table PDFs. For future, it may be able to accept PDF, but in current version, PDFs are not acceptable.
+
+\end{document}
