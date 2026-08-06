@@ -436,13 +436,35 @@ The proposal considered K-means for grouping. The implemented analytics instead 
 
 \noindent\textit{\textbf{Responsible member: }Member 2 - Data Ingestion\textbf{ | Supporting: }Member 3 owns analytics calculations}\par
 
-Structured uploads are profiled as wide student data, long student data, question metadata, summary-level data or unknown. The pipeline normalises headers, removes fully empty rows and columns, validates mappings, converts scores into a canonical long format, excludes invalid responses with reason counts, resolves duplicate or conflicting records, and joins question metadata before calculating analytics. It does not infer a non-binary question's maximum score from the highest observed class score, because doing so would systematically inflate achievement when no student achieved full marks.\par
+Since different teacher may upload different assessment data. For example, Some files use one column for each question and other files put every answer in a new row. Column names may also be different. So, the raw data cannot be directly used by learning analytics engine. In order to solve this, we create the data processing part which is between the uploaded file and other functions. The data processing part is not only for data cleaning but also making the later result has same meaning by standardizes input lines into a uniform long format.\par
 
-Structural errors stop analysis with a clear error, while row-level defects are excluded and counted so valid evidence can still be used.\par
+\subsubsection*{3.4.1 Data Input and Processing}
 
-Outputs include class, question and concept summaries, score variation, low/high areas, support groups, grouping suggestions and cautious teacher-facing notes.\par
+\addcontentsline{toc}{subsubsection}{3.4.1 Data Input and Processing}
 
-Before analytics calculations, student identifiers are deterministically replaced with STU-xxx pseudonyms and aliases are cleared. Teacher-facing references are restored only after analytics; external-AI payloads remove both original and pseudonymous student references.\par
+The current workflow of the data processing part supports CSV, XLSX, and XLS files. Excel documents may contain several non-empty sheets. Each sheet is processed individually. CSV files may have some problems like delimiter or text encoding. We check the problems when reading, empty rows and columns will be removed, and if blank or duplicate headers are detected, a stable column name will be assigned and log a warning.\par
+
+There are two common data forms: wide data(where each row represents a student and columns represent question scores) and long data(where each row represents a single answer). Input data mainly arrives in one of two forms. Files only contain summary are also acceptable.\par
+
+In order to handle various files with different column names across different schools and platforms, this component tries to check the column names against a predefined set. However, this check may fail. In this case, teachers can save a column mapping. The system uses this mapping first. Mapping the rigth column is important because if the mapping is wrong, the score meaning can be wrong too.\par
+
+After mapping, every valid answer is transformed into one common form denoted as a canonical response. This structure stores the student, assessment, question, score and maximum score. It may also store the concept. By using the structure, the learning analytics engine only needs to handle with one data form, which means wide and long data can be processed by the same analytical pipeline. If an uploaded dataset contain both a wide and a long table, in this case, we use the long table.\par
+
+Each score needs a maximum score. For boolean (0/1) questions, the maximum score can be 1. For other wide format questions, this value is from the file or the mapping. We do not use the highest student score, since there is no student get the full score in the class. If we can not find the value, the system stops.
+
+There is another problem. If the table structure is entirely unrecognizable, or if a selected table/mapping is missing, the system terminates the analysis. However, one bad row is different. Rows with no student ID or a wrong score will be removed. Duplicate records with different scores will be deleted. The system will also save the number of deleted records and the reason for deletion. Then, other rows can still be used.\par 
+
+\subsubsection*{3.4.2 Analytics and Student Privacy in Analytics Pipeline}
+
+\addcontentsline{toc}{subsubsection}{3.4.2 Analytics and Student Privacy in Analytics Pipeline}
+
+The canonical responses will be used by the system to aggregates performance metrics at the class, question, and concept levels. This allows the system to highlight areas of strength and weakness, and dynamically construct student groupings.\par
+
+In the case that we only have summary data, we can still make some class level or question level insights by using the summary data. However, we cannot make student groups because there is no student level data. If there is no question explanations, the result may have less information.\par
+
+Before analytics, the system changes the student IDs to \texttt{STU-xxx}. The learning analytics engine uses these new IDs. After get the result, the original ID can be put back.\par
+
+\textbf{Some limits.} We have code some functions to read table PDFs. For future, it may be able to accept PDF, but in current version, PDFs are not acceptable.\par
 
 \subsection*{3.5 Privacy Filter and Role-Based Access}
 
